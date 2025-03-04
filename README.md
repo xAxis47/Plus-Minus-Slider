@@ -1,6 +1,6 @@
 <img src="https://github.com/xAxis47/PlusMinusSlider/assets/140302470/cccaeff2-41df-4d54-b995-d3e5c1306bb7" width="300">
 
-PlusMinusSlider can express below 0 value. It is written in SwiftUI.
+If you want to express plus and minus value with one slider, please use this PlusMinusSlider. It is written in SwiftUI.
 
 # Installation
 
