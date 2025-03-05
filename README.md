@@ -1,3 +1,5 @@
+https://img.shields.io/badge/4.0-Swift-red?style=flat&logo=Swift&logoColor=FA7343 https://img.shields.io/badge/15.6-iOS-orange?style=flat https://img.shields.io/badge/SUCCESS-Swift%20Package%20Manager-blue?style=flat https://img.shields.io/badge/LICENSE-Apache%20License%202.0-green?style=flat
+
 <img src="https://github.com/xAxis47/PlusMinusSlider/assets/140302470/cccaeff2-41df-4d54-b995-d3e5c1306bb7" width="300">
 
 If you want to express plus and minus value with one slider, please use this PlusMinusSlider. It is written in SwiftUI.
