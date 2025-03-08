@@ -79,7 +79,7 @@ public struct PlusMinusSlider: View {
                 
                 if !isHideLimitValue {
                     
-                    //left limit value
+                    //left negative limit value
                     Text("\(Int(minValue))")
                         .font(minValueFont)
                         .fontWeight(minValueFontWeight)
@@ -109,9 +109,8 @@ public struct PlusMinusSlider: View {
                             .font(thumbValueFont)
                             .fontWeight(thumbValueFontWeight)
                             .foregroundColor(thumbValueColor)
-                            .frame(width: 12, height: 12, alignment: .center)
-                            .offset(x: -6, y: -thumbValueOffset)
-                            .offset(x: thumbPosition)
+                            .frame(width: 0, height: 0, alignment: .center)
+                            .offset(x: thumbPosition, y: -thumbValueOffset)
                       
                     //thumb's value's type is Double and show thumb value
                     } else if !isIntThumb && !isHideThumbValue {
@@ -121,9 +120,8 @@ public struct PlusMinusSlider: View {
                             .font(thumbValueFont)
                             .fontWeight(thumbValueFontWeight)
                             .foregroundColor(thumbValueColor)
-                            .frame(width: 12, height: 12, alignment: .center)
-                            .offset(x: -6, y: -thumbValueOffset)
-                            .offset(x: thumbPosition)
+                            .frame(width: 0, height: 0, alignment: .center)
+                            .offset(x: thumbPosition, y: -thumbValueOffset)
                         
                     }
                     
@@ -131,43 +129,21 @@ public struct PlusMinusSlider: View {
                     Capsule()
                         .frame(width: thumbDiameter, height: thumbDiameter)
                         .foregroundColor(thumbColor)
-                        .offset(x: -thumbDiameter / 2)
-                        .offset(x: thumbPosition)
+                        .offset(x: -thumbDiameter / 2 + thumbPosition)
                         .gesture(
                             
                             DragGesture()
                             
                                 .onChanged { value in
-                                   
-                                    if value.location.x >= 0 && value.location.x <= barWidth {
+                                    
+                                    if value.location.x > 0 && value.location.x < barWidth {
                                         
-                                        let sliderValue: Double
+                                        //calculate thumb's center position.
+                                        thumbPosition = Double(value.location.x)
+
+                                        //calculate thumb's value.
+                                        thumbValue = Double(thumbPosition / barWidth) * (maxValue - minValue) + minValue
                                         
-                                        if isSmoothDrag {
-                                            
-                                            //calculate thumb's center position.
-                                            thumbPosition = (Double(value.location.x / barWidth * (maxValue - minValue))) * barWidth / (maxValue - minValue)
-                                            
-                                            //calculate thumb's value.
-                                            sliderValue = ((Double(thumbPosition / barWidth)) * (maxValue - minValue)) + minValue
-                    
-                                            thumbValue = sliderValue
-                                           
-                                        } else {
-                                            
-                                            //calculate thumb's center position.
-                                            thumbPosition = round(Double(value.location.x / barWidth * (maxValue - minValue))) * barWidth / (maxValue - minValue)
-                                            
-                                            //calculate thumb's value.
-                                            sliderValue = round((Double(thumbPosition / barWidth)) * (maxValue - minValue)) + minValue
-                                            
-                                            thumbValue = sliderValue
-                                            
-                                        }
-                                        
-                                        //rounding value
-                                        thumbValue.round()
-                                
                                         //width represents the width of the blue capsule. allow for negative.
                                         let width = thumbPosition - zeroPosition
                                         
@@ -182,60 +158,19 @@ public struct PlusMinusSlider: View {
                                             
                                             //width is minus value. at first make it absolute. and decide bar's left position.
                                             valueWidth = fabs(width)
-                                            leftBarPosition = CGFloat(barWidth / (maxValue - minValue) * (sliderValue - minValue))
+                                            leftBarPosition = CGFloat(barWidth / (maxValue - minValue) * (thumbValue - minValue))
 
                                         }
                                         
-                                    }
-                                    
-                                }
-                                .onEnded { value in
-                                    
-                                    if value.location.x >= 0 && value.location.x <= barWidth {
+                                    } else if value.location.x <= 0 {
                                         
-                                        let sliderValue: Double
+                                        //thumb over minValue, thumbValue is always minValue.
+                                        thumbValue = minValue
                                         
-                                        if isSmoothDrag {
-                                            
-                                            //calculate thumb's center position.
-                                            thumbPosition = (Double(value.location.x / barWidth * (maxValue - minValue))) * barWidth / (maxValue - minValue)
-                                            
-                                            //calculate thumb's value.
-                                            sliderValue = ((Double(thumbPosition / barWidth)) * (maxValue - minValue)) + minValue
-                    
-                                            thumbValue = sliderValue
-                                           
-                                        } else {
-                                            
-                                            //calculate thumb's center position.
-                                            thumbPosition = round(Double(value.location.x / barWidth * (maxValue - minValue))) * barWidth / (maxValue - minValue)
-                                            
-                                            //calculate thumb's value.
-                                            sliderValue = round((Double(thumbPosition / barWidth)) * (maxValue - minValue)) + minValue
-                                            
-                                            thumbValue = sliderValue
-                                            
-                                        }
+                                    } else if value.location.x >= barWidth {
                                         
-                                        thumbValue.round()
-                                
-                                        //width represents the width of the blue capsule. allow for negative.
-                                        let width = thumbPosition - zeroPosition
-                                        
-                                        if width >= 0 {
-                                            
-                                            //blue capsule's width
-                                            valueWidth = width
-                                            //leftBarPosition is center
-                                            leftBarPosition = zeroPosition
-                                            
-                                        } else {
-                                            
-                                            //width is minus value. at first make it absolute. and decide bar's left position.
-                                            valueWidth = fabs(width)
-                                            leftBarPosition = CGFloat(barWidth / (maxValue - minValue) * (sliderValue - minValue))
-
-                                        }
+                                        //thumb over maxValue, thumbValue is always maxValue.
+                                        thumbValue = maxValue
                                         
                                     }
                                     
