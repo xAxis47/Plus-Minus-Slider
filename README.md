@@ -16,10 +16,11 @@ Import the framework.
 import PlusMinusSlider
 ```
 
-Make PlusMinusSlider and must fill “thumbValue”.
+Make PlusMinusSlider and must fill “thumbValue”. Don't set over limit value.
 
 ```
 import SwiftUI
+import PlusMinusSlider
 
 struct ContentView: View {
 
