@@ -79,7 +79,7 @@ public struct PlusMinusSlider: View {
                 
                 if !isHideLimitValue {
                     
-                    //left negative limit value
+                    //left limit value
                     Text("\(Int(minValue))")
                         .font(minValueFont)
                         .fontWeight(minValueFontWeight)
@@ -138,11 +138,23 @@ public struct PlusMinusSlider: View {
                                     
                                     if value.location.x > 0 && value.location.x < barWidth {
                                         
-                                        //calculate thumb's center position.
-                                        thumbPosition = Double(value.location.x)
+                                        let sliderValue: Double
+                                        
+                                        if isSmoothDrag {
+                                            
+                                            //calculate thumb's center position.
+                                            thumbPosition = Double(value.location.x)
 
-                                        //calculate thumb's value.
-                                        thumbValue = Double(thumbPosition / barWidth) * (maxValue - minValue) + minValue
+                                            //calculate thumb's value.
+                                            thumbValue = Double(thumbPosition / barWidth) * (maxValue - minValue) + minValue
+                                            
+                                        } else {
+                                            
+                                            self.thumbPosition = round(Double(value.location.x / barWidth * (maxValue - minValue))) * barWidth / (maxValue - minValue)
+                                            
+                                            thumbValue = round((Double(thumbPosition / barWidth)) * (maxValue - minValue)) + minValue
+                                            
+                                        }
                                         
                                         //width represents the width of the blue capsule. allow for negative.
                                         let width = thumbPosition - zeroPosition
