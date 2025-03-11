@@ -10,13 +10,13 @@ public struct PlusMinusSlider: View {
     
     @Binding var thumbValue: Double
     
-    private let barWidth: CGFloat
-    private let barHeight: CGFloat
+    private let barWidth: Double
+    private let barHeight: Double
     private let isHideLimitValue: Bool
     private let isHideThumbValue: Bool
     private let isIntThumb: Bool
     private let isSmoothDrag: Bool
-    private let limitValueOffset: CGFloat
+    private let limitValueOffset: Double
     private let maxValue: Double
     private let maxValueColor: Color
     private let maxValueFont: Font
@@ -27,12 +27,13 @@ public struct PlusMinusSlider: View {
     private let minValueFontWeight: Font.Weight
     private let sliderColor: Color
     private let thumbColor: Color
-    private let thumbDiameter: CGFloat
+    private let thumbDiameter: Double
     private let thumbValueColor: Color
     private let thumbValueFont: Font
     private let thumbValueFontWeight: Font.Weight
-    private let thumbValueOffset: CGFloat
+    private let thumbValueOffset: Double
     private let valueColor: Color
+    
     
     public init(barWidth: Double = UIScreen.main.bounds.width * 0.65, maxValue: Double = 5, minValue: Double = -5, thumbValue: Binding<Double>) {
        
@@ -41,28 +42,27 @@ public struct PlusMinusSlider: View {
         self.isHideLimitValue = false
         self.isHideThumbValue = false
         self.isIntThumb = false
-        self.isSmoothDrag = false
+        self.isSmoothDrag = true
         self.limitValueOffset = 10
         self.maxValue = maxValue
-        self.maxValueColor = Color.primary
+        self.maxValueColor = .primary
         self.maxValueFont = .body
         self.maxValueFontWeight = .regular
         self.minValue = minValue
-        self.minValueColor = Color.primary
+        self.minValueColor = .primary
         self.minValueFont = .body
         self.minValueFontWeight = .regular
         self.sliderColor = Color(.systemGray5)
         self.thumbColor = Color(.systemGray)
         self.thumbDiameter = 30
-        self.thumbValueColor = Color.primary
+        self.thumbValueColor = .black
         self.thumbValueFont = .body
         self.thumbValueFontWeight = .regular
         self.thumbValueOffset = 30
         self.valueColor = Color.blue
         
         self._thumbValue = thumbValue
-        
-        let initialized = initialOperation(max: maxValue, min: minValue, thumbValue: thumbValue)
+                let initialized = initialOperation(max: maxValue, min: minValue, thumbValue: thumbValue)
         
         self._thumbPosition = initialized.thumbPosition
         self._zeroPosition = initialized.zeroPosition
@@ -168,7 +168,7 @@ public struct PlusMinusSlider: View {
                                             
                                             //width is minus value. at first make it absolute. and decide bar's left position.
                                             valueWidth = fabs(width)
-                                            leftBarPosition = CGFloat(barWidth / (maxValue - minValue) * (thumbValue - minValue))
+                                            leftBarPosition = barWidth / (maxValue - minValue) * (thumbValue - minValue)
 
                                         }
                                         
@@ -212,7 +212,7 @@ public struct PlusMinusSlider: View {
 public extension PlusMinusSlider {
     
     //initialize
-    private init(thumbValue: Binding<Double>, barWidth: CGFloat, barHeight: CGFloat, isHideLimitValue: Bool, isHideThumbValue: Bool, isIntThumb: Bool, isSmoothDrag: Bool,  limitValueOffset: CGFloat, maxValue: Double, maxValueColor: Color, maxValueFont: Font, maxValueFontWeight: Font.Weight, minValue: Double, minValueColor: Color, minValueFont: Font, minValueFontWeight: Font.Weight, sliderColor: Color, thumbColor: Color, thumbDiameter: CGFloat, thumbValueColor: Color, thumbValueFont: Font, thumbValueFontWeight: Font.Weight, thumbValueOffset: CGFloat, valueColor: Color) {
+    private init(thumbValue: Binding<Double>, barWidth: Double, barHeight: Double, isHideLimitValue: Bool, isHideThumbValue: Bool, isIntThumb: Bool, isSmoothDrag: Bool,  limitValueOffset: Double, maxValue: Double, maxValueColor: Color, maxValueFont: Font, maxValueFontWeight: Font.Weight, minValue: Double, minValueColor: Color, minValueFont: Font, minValueFontWeight: Font.Weight, sliderColor: Color, thumbColor: Color, thumbDiameter: Double, thumbValueColor: Color, thumbValueFont: Font, thumbValueFontWeight: Font.Weight, thumbValueOffset: Double, valueColor: Color) {
         
         self.barWidth = barWidth
         self.barHeight = barHeight
@@ -249,7 +249,7 @@ public extension PlusMinusSlider {
         
     }
     
-    func checkValueDiameter(_ diameter: CGFloat) -> CGFloat {
+    func checkValueDiameter(_ diameter: Double) -> Double {
         
         if (self.barWidth <= diameter) {
             
@@ -263,7 +263,7 @@ public extension PlusMinusSlider {
         
     }
     
-    func checkThumbValueOffset(_ diameter: CGFloat) -> CGFloat {
+    func checkThumbValueOffset(_ diameter: Double) -> Double {
         
         if(diameter <= 30) {
             
@@ -308,14 +308,7 @@ public extension PlusMinusSlider {
     //change Int value from Double value
     func isIntThumb(_ bool: Bool) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: bool, isSmoothDrag: self.isSmoothDrag, limitValueOffset: self.limitValueOffset, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
-
-    }
-    
-    //smooth drag of thumb
-    func isSmoothDrag(_ bool: Bool) -> Self {
-        
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: self.isIntThumb, isSmoothDrag: bool, limitValueOffset: self.limitValueOffset, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: bool, isSmoothDrag: !bool, limitValueOffset: self.limitValueOffset, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
@@ -324,6 +317,13 @@ public extension PlusMinusSlider {
         
         PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: self.isIntThumb, isSmoothDrag: self.isSmoothDrag, limitValueOffset: offset, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor:  self.valueColor)
         
+    }
+    
+    //set maximum value
+    func maxValue(_ value: Double) -> Self {
+        
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: self.isIntThumb, isSmoothDrag: self.isSmoothDrag, limitValueOffset: self.limitValueOffset, maxValue: value, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+
     }
     
     //set maximum value's color
@@ -344,6 +344,13 @@ public extension PlusMinusSlider {
     func maxValueFontWeight(_ weight: Font.Weight) -> Self {
         
         PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: self.isIntThumb, isSmoothDrag: self.isSmoothDrag, limitValueOffset: self.limitValueOffset, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: weight, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+
+    }
+    
+    //set minimum value
+    func minValue(_ value: Double) -> Self {
+        
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntThumb: self.isIntThumb, isSmoothDrag: self.isSmoothDrag, limitValueOffset: self.limitValueOffset, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minValue: value, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
@@ -447,13 +454,6 @@ public extension PlusMinusSlider {
             zeroPosition = State(initialValue: Double(barWidth))
             leftBarPosition = State(initialValue: Double(barWidth / (max - min) * (thumbValue.wrappedValue - min)))
             valueWidth = State(initialValue: Double(fabs(barWidth / (max - min) * (thumbValue.wrappedValue - max))))
-            
-            print("zeroPosition is \(zeroPosition)")
-            print("leftBarPosition is \(leftBarPosition)")
-            print("thumbPosition is \(thumbPosition)")
-            print("max is \(max)")
-            print("min is \(min)")
-            print("thumbValue is \(thumbValue)")
             
         } else if min <= 0 && max >= 0 && thumbValue.wrappedValue >= 0  {
 

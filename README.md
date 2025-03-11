@@ -42,7 +42,6 @@ If you need you can change appearance with some modifier.
       .isHideLimitValue(_ bool:)
       .isHideThumbValue(_ bool:)
       .isIntThumb(_ bool:)
-      .isSmoothDrag(_ bool:)
       .limitValueOffset(_ offset:)
       .maxValueColor(_ color:)
       .maxValueFont(_ font:)
@@ -60,6 +59,8 @@ If you need you can change appearance with some modifier.
       new!!
       .barWidth(_ width:)
       .barHeight(_ height:)
+      .maxValue(_ value:)
+      .minValue(_ value:)
       .thumbDiameter(_ diameter:)
       .thumbValueOffset(_ offset:)
       
