@@ -31,7 +31,7 @@ public struct PlusMinusSlider: View {
     private let thumbValueColor: Color
     private let thumbValueFont: Font
     private let thumbValueFontWeight: Font.Weight
-    private let thumbValueOffset: CGFloat
+    private let thumbValueOffset: Double
     private let valueColor: Color
     
     public init(barWidth: Double = UIScreen.main.bounds.width * 0.65, maxValue: Double = 5, minValue: Double = -5, thumbValue: Binding<Double>) {
