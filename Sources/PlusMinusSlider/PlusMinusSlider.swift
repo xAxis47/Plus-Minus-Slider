@@ -34,6 +34,8 @@ public struct PlusMinusSlider: View {
     private let thumbValueOffset: Double
     private let valueColor: Color
     
+    private let animation: Animation = .smooth(duration: 0.1)
+    
     public init(barWidth: Double = UIScreen.main.bounds.width * 0.65, maxValue: Double = 5, minValue: Double = -5, thumbValue: Binding<Double>) {
        
         self.barWidth = barWidth
@@ -101,7 +103,7 @@ public struct PlusMinusSlider: View {
                                                     
                             }
                         }
-                        .animation(.easeInOut(duration: 0.12), value: thumbValue)
+                        .animation(animation, value: thumbValue)
                     
                     //value bar. default color is blue.
                     Capsule()
@@ -113,19 +115,19 @@ public struct PlusMinusSlider: View {
                             calculatePosition(x: value.x)
                                                         
                         }
-                        .animation(.easeInOut(duration: 0.12), value: thumbValue)
+                        .animation(animation, value: thumbValue)
                     
                     //thumb value's type is Int and show thumb value
                     if isIntValue && !isHideThumbValue {
                         
                         Text("\(Int(round(thumbValue)))")
-                            .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, value: thumbValue)
+                            .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue)
                         
                     //thumb's value's type is Double and show thumb value
                     } else if !isIntValue && !isHideThumbValue {
                         
                         Text(String(format: "%.1f", thumbValue))
-                            .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, value: thumbValue)
+                            .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue)
                         
                     }
                     
@@ -145,7 +147,7 @@ public struct PlusMinusSlider: View {
                                 }
                             
                         )
-                        .animation(.easeInOut(duration: 0.12), value: thumbValue)
+                        .animation(animation, value: thumbValue)
                     
                 }
                 
@@ -494,7 +496,7 @@ public extension PlusMinusSlider {
 
 extension View {
     
-    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, value: Double) -> some View {
+    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, animation: Animation, value: Double) -> some View {
         
         self
             .fixedSize(horizontal: true, vertical: false)
@@ -503,7 +505,7 @@ extension View {
             .foregroundColor(color)
             .frame(width: 0, height: 0, alignment: .center)
             .offset(x: position, y: offset)
-            .animation(.easeInOut(duration: 0.12), value: value)
+            .animation(animation, value: value)
 
         
     }
