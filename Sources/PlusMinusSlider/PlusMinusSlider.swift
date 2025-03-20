@@ -2,6 +2,8 @@ import SwiftUI
 
 public struct PlusMinusSlider: View {
     
+    @State var isTouchThumb: Bool = false
+    
     @State var thumbPosition: Double = 0
     @State var leftBarPosition: Double = 0
     @State var zeroPosition: Double = 0
@@ -34,7 +36,7 @@ public struct PlusMinusSlider: View {
     private let thumbValueOffset: Double
     private let valueColor: Color
     
-    private let animation: Animation = .smooth(duration: 0.1)
+    private let animation: Animation = .linear(duration: 0.15)
     
     public init(barWidth: Double = UIScreen.main.bounds.width * 0.65, maxValue: Double = 5, minValue: Double = -5, thumbValue: Binding<Double>) {
        
@@ -117,14 +119,27 @@ public struct PlusMinusSlider: View {
                         }
                         .animation(animation, value: thumbValue)
                     
-                    //thumb value's type is Int and show thumb value
-                    if isIntValue && !isHideThumbValue {
+                    
+                    //thumb value's type is Int and show thumb value and touching thumb
+                    if isIntValue && !isHideThumbValue && isTouchThumb {
+                        
+                        Text("\(Int(round(thumbValue)))")
+                            .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset)
+                        
+                    //thumb value's type is Double and show thumb value nad touching thumb
+                    } else if !isIntValue && !isHideThumbValue && isTouchThumb {
+                    
+                        Text(String(format: "%.1f", thumbValue))
+                            .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset)
+                        
+                    //thumb value's type is Int and show thumb value and thouch bar
+                    } else if isIntValue && !isHideThumbValue && !isTouchThumb {
                         
                         Text("\(Int(round(thumbValue)))")
                             .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue)
                         
                     //thumb's value's type is Double and show thumb value
-                    } else if !isIntValue && !isHideThumbValue {
+                    } else if !isIntValue && !isHideThumbValue && !isTouchThumb {
                         
                         Text(String(format: "%.1f", thumbValue))
                             .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue)
@@ -133,21 +148,25 @@ public struct PlusMinusSlider: View {
                     
                     //thumb
                     Capsule()
-                        .frame(width: thumbDiameter, height: thumbDiameter)
-                        .foregroundColor(thumbColor)
-                        .offset(x: -thumbDiameter / 2 + thumbPosition)
+                        .thumbParameter(diameter: thumbDiameter, color: thumbColor, position: thumbPosition)
                         .gesture(
                             
                             DragGesture()
                             
                                 .onChanged { value in
                                     
+                                    isTouchThumb = true
+                                    
                                     calculatePosition(x: value.location.x)
                                                     
                                 }
+                                .onEnded { _ in
+                                    
+                                    isTouchThumb = false
+                                    
+                                }
                             
                         )
-                        .animation(animation, value: thumbValue)
                     
                 }
                 
@@ -496,6 +515,31 @@ public extension PlusMinusSlider {
 
 extension View {
     
+    @ViewBuilder
+    func `if`<Content: View>(
+        _ condition: Bool,
+        @ViewBuilder transform: (Self) -> Content
+    ) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+
+    @ViewBuilder
+    func `if`<TrueContent: View, FalseContent: View>(
+        _ condition: Bool,
+        @ViewBuilder _ then: (Self) -> TrueContent,
+        @ViewBuilder `else`: (Self) -> FalseContent
+    ) -> some View {
+        if condition {
+            then(self)
+        } else {
+            `else`(self)
+        }
+    }
+    
     func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, animation: Animation, value: Double) -> some View {
         
         self
@@ -507,6 +551,40 @@ extension View {
             .offset(x: position, y: offset)
             .animation(animation, value: value)
 
+        
+    }
+    
+    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double) -> some View {
+        
+        self
+            .fixedSize(horizontal: true, vertical: false)
+            .font(font)
+            .fontWeight(weight)
+            .foregroundColor(color)
+            .frame(width: 0, height: 0, alignment: .center)
+            .offset(x: position, y: offset)
+
+        
+    }
+    
+    func thumbParameter(diameter:Double, color: Color, position: Double, animation: Animation, value: Double) -> some View {
+        
+        self
+            .frame(width: diameter, height: diameter)
+            .foregroundColor(color)
+            .offset(x: -diameter / 2 + position)
+            .animation(animation, value: value)
+        
+        
+    }
+    
+    func thumbParameter(diameter:Double, color: Color, position: Double) -> some View {
+        
+        self
+            .frame(width: diameter, height: diameter)
+            .foregroundColor(color)
+            .offset(x: -diameter / 2 + position)
+        
         
     }
     
