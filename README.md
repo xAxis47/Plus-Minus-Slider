@@ -17,7 +17,7 @@ Import the framework.
 import PlusMinusSlider
 ```
 
-Make PlusMinusSlider and must fill “thumbValue”. Don't set over limit value. If the upper limit is exceeded, a fatalError will occur.
+Make PlusMinusSlider and must fill “thumbValue”. Don't set over limit value. If the upper limit is exceeded, a fatalError will occur. iOS version is 16 or higher.
 
 ```
 import SwiftUI
