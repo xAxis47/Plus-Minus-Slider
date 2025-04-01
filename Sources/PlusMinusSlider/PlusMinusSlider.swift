@@ -55,7 +55,7 @@ public struct PlusMinusSlider: View {
         self.isHideThumbValue = false
         self.isIntValue = false
         self.isSmoothDrag = true
-        self.isVertical = true
+        self.isVertical = false
         self.limitValueOffset = 10
         self.maxSFSymbolsString = ""
         self.maxValue = maxValue
