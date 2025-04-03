@@ -44,12 +44,6 @@ public struct PlusMinusSlider: View {
     
     public init(barWidth: Double = UIScreen.main.bounds.width * 0.65, maxValue: Double = 5, minValue: Double = -5, thumbValue: Binding<Double>) {
         
-        let range: ClosedRange = minValue...maxValue
-        
-        if !range.contains(thumbValue.wrappedValue) {
-            fatalError("thumbValue is not in range \(range)")
-        }
-       
         self.barWidth = barWidth
         self.barHeight = 10
         self.isHideLimitValue = false
@@ -90,6 +84,12 @@ public struct PlusMinusSlider: View {
     
     public var body: some View {
         
+        let range: ClosedRange = minValue...maxValue
+        
+        if !range.contains($thumbValue.wrappedValue) {
+            fatalError("thumbValue is not in range \(range)")
+        }
+       
         HStack(alignment: .center) {
             
             //set image to the left of the minimum value
