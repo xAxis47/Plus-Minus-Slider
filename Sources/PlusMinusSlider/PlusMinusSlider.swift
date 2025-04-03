@@ -18,6 +18,7 @@ public struct PlusMinusSlider: View {
     private let isHideThumbValue: Bool
     private let isIntValue: Bool
     private let isSmoothDrag: Bool
+    private let isUnderValue: Bool
     private let isVertical: Bool
     private let limitValueOffset: Double
     private let maxSFSymbolsString: String
@@ -55,7 +56,8 @@ public struct PlusMinusSlider: View {
         self.isHideThumbValue = false
         self.isIntValue = false
         self.isSmoothDrag = true
-        self.isVertical = false
+        self.isUnderValue = true
+        self.isVertical = true
         self.limitValueOffset = 10
         self.maxSFSymbolsString = ""
         self.maxValue = maxValue
@@ -140,25 +142,25 @@ public struct PlusMinusSlider: View {
                 if isIntValue && !isHideThumbValue && isTouchThumb {
                     
                     Text("\(Int(round(thumbValue)))")
-                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, isVertical: isVertical)
+                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, isUnderValue: isUnderValue, isVertical: isVertical)
                     
                 //thumb value's type is Double and show thumb value nad touching thumb
                 } else if !isIntValue && !isHideThumbValue && isTouchThumb {
                 
                     Text(String(format: "%.1f", thumbValue))
-                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, isVertical: isVertical)
+                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, isUnderValue: isUnderValue, isVertical: isVertical)
                     
                 //thumb value's type is Int and show thumb value and thouch bar
                 } else if isIntValue && !isHideThumbValue && !isTouchThumb {
                     
                     Text("\(Int(round(thumbValue)))")
-                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue, isVertical: isVertical)
+                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue, isUnderValue: isUnderValue, isVertical: isVertical)
                     
                 //thumb's value's type is Double and show thumb value
                 } else if !isIntValue && !isHideThumbValue && !isTouchThumb {
                     
                     Text(String(format: "%.1f", thumbValue))
-                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue, isVertical: isVertical)
+                        .textParameter(font: thumbValueFont, weight: thumbValueFontWeight, color: thumbValueColor, position: thumbPosition, offset: -thumbValueOffset, animation: animation, value: thumbValue, isUnderValue: isUnderValue, isVertical: isVertical)
                     
                 }
                 
@@ -216,7 +218,7 @@ public struct PlusMinusSlider: View {
 public extension PlusMinusSlider {
     
     //initialize
-    private init(thumbValue: Binding<Double>, barWidth: Double, barHeight: Double, isHideLimitValue: Bool, isHideThumbValue: Bool, isIntValue: Bool, isSmoothDrag: Bool, isVertical: Bool, limitValueOffset: Double, maxSFSymbolsString: String, maxValue: Double, maxValueColor: Color, maxValueFont: Font, maxValueFontWeight: Font.Weight, minSFSymbolsString: String, minValue: Double, minValueColor: Color, minValueFont: Font, minValueFontWeight: Font.Weight, sliderColor: Color, thumbColor: Color, thumbDiameter: Double, thumbValueColor: Color, thumbValueFont: Font, thumbValueFontWeight: Font.Weight, thumbValueOffset: Double, valueColor: Color) {
+    private init(thumbValue: Binding<Double>, barWidth: Double, barHeight: Double, isHideLimitValue: Bool, isHideThumbValue: Bool, isIntValue: Bool, isSmoothDrag: Bool, isUnderValue: Bool, isVertical: Bool, limitValueOffset: Double, maxSFSymbolsString: String, maxValue: Double, maxValueColor: Color, maxValueFont: Font, maxValueFontWeight: Font.Weight, minSFSymbolsString: String, minValue: Double, minValueColor: Color, minValueFont: Font, minValueFontWeight: Font.Weight, sliderColor: Color, thumbColor: Color, thumbDiameter: Double, thumbValueColor: Color, thumbValueFont: Font, thumbValueFontWeight: Font.Weight, thumbValueOffset: Double, valueColor: Color) {
         
         self.barWidth = barWidth
         self.barHeight = barHeight
@@ -224,6 +226,7 @@ public extension PlusMinusSlider {
         self.isHideThumbValue = isHideThumbValue
         self.isIntValue = isIntValue
         self.isSmoothDrag = isSmoothDrag
+        self.isUnderValue = isUnderValue
         self.isVertical = isVertical
         self.limitValueOffset = limitValueOffset
         self.maxSFSymbolsString = maxSFSymbolsString
@@ -287,133 +290,140 @@ public extension PlusMinusSlider {
     //set slider's bar width
     func barWidth(_ width: Double) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: width, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: width, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set slider's bar height
     func barHeight(_ height: Double) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: height, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical,  limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: height, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical,  limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //hide left and right values
     func isHideLimitValue(_ bool: Bool) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: bool, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: bool, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //hide value on the thumb
     func isHideThumbValue(_ bool: Bool) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: bool, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: bool, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //change Int value from Double value
     func isIntValue(_ bool: Bool) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: bool, isSmoothDrag: !bool, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: bool, isSmoothDrag: !bool, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+
+    }
+
+    //change Int value from Double value
+    func isUnderValue(_ bool: Bool) -> Self {
+        
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: bool, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //change vertical or horizontal
     func isVertical(_ bool: Bool) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: bool,  limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: bool,  limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //bar of slider and limit values offset
     func limitValueOffset(_ offset: CGFloat) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: offset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor:  self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: offset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor:  self.valueColor)
         
     }
     
     //set right image. it's only SF Symbols' image.
     func maxSFSymbolsString(_ string: String) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: string, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: string, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set maximum value
     func maxValue(_ value: Double) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: value, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: value, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set maximum value's color
     func maxValueColor(_ color: Color) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: color, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: color, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set maximum value's font
     func maxValueFont(_ font: Font) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: font, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: font, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
         
     }
     
     //set maximum value's font weight
     func maxValueFontWeight(_ weight: Font.Weight) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: weight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: weight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set maximum value
     func minSFSymbolsString(_ string: String) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: string, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: string, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set minimum value
     func minValue(_ value: Double) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: value, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: value, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set minimum value's color
     func minValueColor(_ color: Color) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: color, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: color, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
         
     }
     
     //set minimum value's font
     func minValueFont(_ font: Font) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: font, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: font, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
         
     }
     
     //set minimu value's font weight
     func minValueFontWeight(_ weight: Font.Weight) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: weight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: weight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
 
     //set slider's color. it is background color. not value color.
     func sliderColor(_ color: Color) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: color, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor:  self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: color, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor:  self.valueColor)
         
     }
     
     //set thumb's color
     func thumbColor(_ color: Color) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: minValueFontWeight, sliderColor: self.sliderColor, thumbColor: color, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: minValueFontWeight, sliderColor: self.sliderColor, thumbColor: color, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
         
     }
     
@@ -423,42 +433,42 @@ public extension PlusMinusSlider {
         let checkedDiameter = checkValueDiameter(diameter)
         let checkedThumbValueOffset =  checkThumbValueOffset(diameter)
         
-        return PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: checkedDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: checkedThumbValueOffset, valueColor: self.valueColor)
+        return PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: checkedDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: checkedThumbValueOffset, valueColor: self.valueColor)
         
     }
     
     //set thumb's value color.
     func thumbValueColor(_ color: Color) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: color, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: color, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
         
     }
     
     //set thumb's value font
     func thumbValueFont(_ font: Font) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: font, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: font, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
         
     }
     
     //set thumb's value font weight
     func thumbValueFontWeight(_ weight: Font.Weight) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: weight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: weight, thumbValueOffset: self.thumbValueOffset, valueColor: self.valueColor)
 
     }
     
     //set thumb's value font weight
     func thumbValueOffset(_ offset: CGFloat) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: offset, valueColor: self.valueColor)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: offset, valueColor: self.valueColor)
 
     }
     
     //set value color. default color is blue. it is value.
     func valueColor(_ color: Color) -> Self {
         
-        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: color)
+        PlusMinusSlider(thumbValue: self._thumbValue, barWidth: self.barWidth, barHeight: self.barHeight, isHideLimitValue: self.isHideLimitValue, isHideThumbValue: self.isHideThumbValue, isIntValue: self.isIntValue, isSmoothDrag: self.isSmoothDrag, isUnderValue: self.isUnderValue, isVertical: self.isVertical, limitValueOffset: self.limitValueOffset, maxSFSymbolsString: self.maxSFSymbolsString, maxValue: self.maxValue, maxValueColor: self.maxValueColor, maxValueFont: self.maxValueFont, maxValueFontWeight: self.maxValueFontWeight, minSFSymbolsString: self.minSFSymbolsString, minValue: self.minValue, minValueColor: self.minValueColor, minValueFont: self.minValueFont, minValueFontWeight: self.minValueFontWeight, sliderColor: self.sliderColor, thumbColor: self.thumbColor, thumbDiameter: self.thumbDiameter, thumbValueColor: self.thumbValueColor, thumbValueFont: self.thumbValueFont, thumbValueFontWeight: self.thumbValueFontWeight, thumbValueOffset: self.thumbValueOffset, valueColor: color)
         
     }
     
@@ -563,7 +573,7 @@ public extension PlusMinusSlider {
 
 extension View {
     
-    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, animation: Animation, value: Double, isVertical: Bool) -> some View {
+    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, animation: Animation, value: Double, isUnderValue: Bool, isVertical: Bool) -> some View {
         
         self
             .rotationEffect(isVertical ? .degrees(-90) : .degrees(0))
@@ -572,12 +582,12 @@ extension View {
             .fontWeight(weight)
             .foregroundColor(color)
             .frame(width: 0, height: 0, alignment: .center)
-            .offset(x: position, y: offset)
+            .offset(x: position, y: isUnderValue ? -offset : offset)
             .animation(animation, value: value)
 
     }
     
-    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, isVertical: Bool) -> some View {
+    func textParameter(font: Font, weight: Font.Weight, color: Color, position: Double, offset: Double, isUnderValue: Bool, isVertical: Bool) -> some View {
         
         self
             .rotationEffect(isVertical ? .degrees(-90) : .degrees(0))
@@ -586,7 +596,7 @@ extension View {
             .fontWeight(weight)
             .foregroundColor(color)
             .frame(width: 0, height: 0, alignment: .center)
-            .offset(x: position, y: offset)
+            .offset(x: position, y: isUnderValue ? -offset : offset)
 
     }
     

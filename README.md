@@ -60,11 +60,12 @@ If you need you can change appearance with some modifier.
       new!!
       .barWidth(_ width:)
       .barHeight(_ height:)
+      .isUnderValue(_ bool:) 
+      .isVertical(_ bool:)
       .maxValue(_ value:)
       .minValue(_ value:)
       .thumbDiameter(_ diameter:)
       .thumbValueOffset(_ offset:)
-      .isVertical(_ bool:)
       .maxSFSymbolsString(_ string:)
       .minSFSymbolsString(_ string:)
 
